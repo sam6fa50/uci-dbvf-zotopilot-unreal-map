@@ -11,6 +11,10 @@ if (Get-Process UnrealEditor -ErrorAction SilentlyContinue) {
 	throw "Close the Unreal editor first."
 }
 
+if (git status --porcelain) {
+    throw "Uncommitted changes. Commit first so the build matches a commit."
+}
+
 $EngineRoot  = "C:\Program Files\Epic Games\UE_5.8"
 $ProjectName = "UCI_DBVF_2627_AirSim"
 $ProjectRoot = "$PSScriptRoot\.."
@@ -33,4 +37,8 @@ if ($LASTEXITCODE -ne 0) {
 
 # Add runtime config, then zip
 Copy-Item "$ProjectRoot\Sim\settings.json", "$ProjectRoot\Sim\Launch.bat" "$ArchiveDir\Windows"
+
+# Add the commit the build is based off of into the build artifact
+git rev-parse HEAD | Set-Content "$ArchiveDir\Windows\BUILD_COMMIT.txt"
+
 Compress-Archive "$ArchiveDir\Windows\*" $ZipPath

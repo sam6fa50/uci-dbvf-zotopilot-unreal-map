@@ -9,17 +9,21 @@ $ErrorActionPreference = 'Stop'
 
 # Accept "x.x.x" or "vx.x.x"; always use "vx.x.x"
 $Version = 'v' + $Version.TrimStart('v', 'V')
-
 $ProjectName = "UCI_DBVF_2627_AirSim"
 $ZipPath     = "$PSScriptRoot\..\Dist\$ProjectName-$Version-Win64.zip"
+$CommitFile  = "$PSScriptRoot\..\Dist\$Version\Windows\BUILD_COMMIT.txt"
 
 # The tag must point at exactly the source that was built
 if (git status --porcelain) {
-	throw "Uncommitted changes. Commit and rebuild before publishing." 
+    throw "Uncommitted changes. Commit and rebuild before publishing."
 }
 
-if (-not (Test-Path $ZipPath)) {
-	throw "No build found at $ZipPath. Run New-Release.ps1 $Version first." 
+if (-not (Test-Path $ZipPath) -or -not (Test-Path $CommitFile)) {
+    throw "No build found for $Version. Run New-Release.ps1 $Version first."
+}
+
+if ((Get-Content $CommitFile) -ne (git rev-parse HEAD)) {
+    throw "HEAD moved since $Version was built. Rebuild first."
 }
 
 # Push after uncomitted changes
