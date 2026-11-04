@@ -1,8 +1,6 @@
 # ZotoPilot's Simulation Unreal Engine Map
----
 
 ## About
----
 
 This repository houses the Unreal Engine map used by UCI's DBVF team ZotoPilot used for simulation with AirSim derivatives. This repository does NOT house the scripts, that will go separately to decouple the two.
 
@@ -13,7 +11,6 @@ This method of utilizing AirSim comes with the downside that environments cannot
 To work on the map, see [Development](#development), and for usage off of the artifacts generated, see below.
 
 ## Usage
----
 
 To download the latest version of the map, go to the release page and download the artifact for the latest tag. Extract the program in your location of choice, and launch it by executing `Launch.bat`. You will then get an elevation request for network permissions, select allow.
 
@@ -22,7 +19,6 @@ After this, you will be able to interface wtih localhost scripts by executing th
 Currently, Windows is the only target platform but this will be changed if needed. This does not prevent opening the map in Unreal Editor, but it does potentially remove/reduce automations present (fetching dependencies, building, and publishing to GitHub releases). This is because for now there are only PowerShell scripts for all automation, though the dependency fetching andit may work on the Linux build for PowerShell as well.
 
 ## Customizing the Simulation
----
 
 There are a few options exposed from the `settings.json` file that is included in the artifact's root. You can use this to change your mode to, for example, `ComputerVision` mode by changing the file to:
 
@@ -36,7 +32,6 @@ There are a few options exposed from the `settings.json` file that is included i
 You can then interface with this mode by following the scripting API for `ComputerVision` mode for AirSim
 
 ## Development
----
 
 In order to develop the map, you need Unreal Engine 5.8.3 (soon will be updated to 5.8.4). Opening on another version is not supported and changes made after opening in a different version should NOT be committed to this repository yet as there is no formal structure for branches.
 
@@ -57,7 +52,6 @@ Once it opens, you can begin working on the map. Commit your changes as usual, t
 > Files above 100 MiB will be rejected by Git (as we have not configured Git LFS for this repository yet), so be careful with large assets!
 
 ## Building & Pushing Releases to GitHub
----
 
 If you would like to build from terminal, you can run `Tools/New-Release.ps1 <version-number>` after finalizing your Git commits. This will build your project into an executable in `Dist/<version-number>` with a packaged zip next to it that can be distributed or published to GitHub releases.
 
